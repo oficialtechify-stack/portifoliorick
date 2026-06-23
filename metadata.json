@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Marcos Henrique - Hardened Portfolio",
+  "description": "Portfolio de engenharia de software — interfaces performáticas, motion e arquitetura de sistemas. [HARDENED \u0026 SECURE VERSION - ANTI-CLONE ACTIVE]",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
