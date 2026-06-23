@@ -192,29 +192,29 @@ const LanguageSwitcher = ({ onSimulateOffline }: { onSimulateOffline: (val: bool
     <div className="flex items-center gap-3">
       <ThemeSwitcher />
       <DropdownMenu>
-      <DropdownMenuTrigger className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "rounded-full hover:bg-white/5 flex items-center gap-2 group px-4")}>
-        <Languages className="w-4 h-4 text-white/50 group-hover:text-primary transition-colors" />
-        <span className="text-[10px] font-black uppercase tracking-widest text-white/70 group-hover:text-white transition-colors">
+      <DropdownMenuTrigger className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "rounded-full hover:bg-black/5 dark:hover:bg-white/5 flex items-center gap-2 group px-4")}>
+        <Languages className="w-4 h-4 text-zinc-550 dark:text-white/50 group-hover:text-primary transition-colors" />
+        <span className="text-[10px] font-black uppercase tracking-widest text-zinc-700 dark:text-white/70 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">
           {i18n.language.split('-')[0]}
         </span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-black/90 border-white/10 backdrop-blur-xl">
+      <DropdownMenuContent align="end" className="bg-white/95 dark:bg-black/90 border-black/10 dark:border-white/10 backdrop-blur-xl">
         <DropdownMenuItem 
           onClick={() => i18n.changeLanguage("pt")}
-          className="text-white hover:bg-primary hover:text-black focus:bg-primary focus:text-black cursor-pointer font-bold uppercase text-[10px] tracking-widest"
+          className="text-zinc-800 dark:text-white hover:bg-primary hover:text-black focus:bg-primary focus:text-black cursor-pointer font-bold uppercase text-[10px] tracking-widest"
         >
           PT-BR
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={() => i18n.changeLanguage("en")}
-          className="text-white hover:bg-primary hover:text-black focus:bg-primary focus:text-black cursor-pointer font-bold uppercase text-[10px] tracking-widest"
+          className="text-zinc-800 dark:text-white hover:bg-primary hover:text-black focus:bg-primary focus:text-black cursor-pointer font-bold uppercase text-[10px] tracking-widest"
         >
           English
         </DropdownMenuItem>
-        <div className="h-[1px] bg-white/10 my-1" />
+        <div className="h-[1px] bg-black/10 dark:bg-white/10 my-1" />
         <DropdownMenuItem 
           onClick={() => onSimulateOffline(true)}
-          className="text-red-500 hover:bg-red-500 hover:text-white focus:bg-red-500 focus:text-white cursor-pointer font-bold uppercase text-[10px] tracking-widest flex items-center gap-2"
+          className="text-red-500 hover:bg-red-550 hover:text-white focus:bg-red-550 focus:text-white cursor-pointer font-bold uppercase text-[10px] tracking-widest flex items-center gap-2"
         >
           <WifiOff className="w-3 h-3" />
           Simulate Offline
@@ -335,35 +335,41 @@ export default function App() {
             className="relative w-full z-10"
           >
             {/* Nav Header (Common for all pages) */}
-            <div className="w-full max-w-4xl mx-auto px-6 pt-12 flex flex-col items-center">
-              <div className="w-full flex items-center justify-between mb-8 gap-2 sm:gap-4 md:gap-6 relative">
-                 {/* Brand Logo */}
-                 <Link to="/" className="group flex flex-col items-start shrink-0">
-                   <motion.div 
-                     initial={{ opacity: 0, x: -20 }}
-                     animate={{ opacity: 1, x: 0 }}
-                     whileHover={{ scale: 1.02 }}
-                     className="text-[12px] min-[360px]:text-sm sm:text-lg md:text-3xl font-black italic tracking-tighter uppercase cursor-pointer flex items-center gap-1 min-[360px]:gap-1.5 md:gap-2 shrink-0"
-                   >
-                     <Code2 className="w-4 h-4 min-[360px]:w-5 min-[360px]:h-5 md:w-6 md:h-6 text-primary animate-pulse shrink-0" />
-                     <div className="shrink-0">
-                       <span className="text-zinc-900 dark:text-white group-hover:text-primary transition-colors duration-500">{t("nav.brand")}</span>
-                       <span className="text-primary italic group-hover:text-white transition-colors duration-500">{t("nav.brandSuffix")}</span>
-                     </div>
-                   </motion.div>
-                   <motion.div 
-                     animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.01, 1] }}
-                     transition={{ duration: 2, repeat: Infinity }}
-                     className="h-[2px] w-full bg-primary/80 blur-[1px] mt-[-2px]" 
-                   />
-                 </Link>
+            <div className="w-full max-w-4xl mx-auto px-4 md:px-6 pt-8 md:pt-12 flex flex-col items-center">
+              <div className="w-full flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 md:gap-6 relative">
+                 {/* Brand Logo & Mobile Switchers container */}
+                 <div className="w-full flex items-center justify-between md:w-auto shrink-0">
+                   <Link to="/" className="group flex flex-col items-start shrink-0">
+                     <motion.div 
+                       initial={{ opacity: 0, x: -20 }}
+                       animate={{ opacity: 1, x: 0 }}
+                       whileHover={{ scale: 1.02 }}
+                       className="text-[14px] sm:text-lg md:text-3xl font-black italic tracking-tighter uppercase cursor-pointer flex items-center gap-1.5 md:gap-2 shrink-0"
+                     >
+                       <Code2 className="w-5 h-5 md:w-6 md:h-6 text-primary animate-pulse shrink-0" />
+                       <div className="shrink-0 text-zinc-900 dark:text-white transition-colors duration-500">
+                         <span className="group-hover:text-primary transition-colors duration-550">{t("nav.brand")}</span>
+                         <span className="text-primary italic group-hover:text-zinc-900 dark:group-hover:text-white transition-colors duration-550">{t("nav.brandSuffix")}</span>
+                       </div>
+                     </motion.div>
+                     <motion.div 
+                       animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.01, 1] }}
+                       transition={{ duration: 2, repeat: Infinity }}
+                       className="h-[2px] w-full bg-primary/80 blur-[1px] mt-[-2px]" 
+                     />
+                   </Link>
 
-                 {/* Desktop Menu */}
-                 <nav className="hidden md:flex items-center gap-1.5 bg-white/[0.02] border border-white/5 py-1.5 px-2 rounded-full backdrop-blur-md relative">
+                   {/* Mobile Options Widget Row */}
+                   <div className="flex md:hidden items-center gap-2">
+                     <LanguageSwitcher onSimulateOffline={setIsOffline} />
+                   </div>
+                 </div>
+
+                 {/* Shared Menu Pill (Always visible!) */}
+                 <nav className="flex items-center justify-center self-center gap-1 bg-black/[0.04] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 py-1 px-1 sm:py-1.5 sm:px-2 rounded-full backdrop-blur-md relative max-w-full overflow-x-auto no-scrollbar">
                    {[
                      { name: t("nav.inicio"), path: "/" },
                      { name: t("nav.projetos"), path: "/projects" },
-                     
                      { name: t("nav.sobre"), path: "/about" },
                      { name: t("nav.experiencia"), path: "/experience" },
                      { name: t("nav.contato"), path: "/contact" }
@@ -374,7 +380,7 @@ export default function App() {
                          key={idx} 
                          to={item.path} 
                          className={cn(
-                           "relative px-4 py-2 text-[10px] font-black uppercase tracking-widest rounded-full transition-all duration-300",
+                           "relative px-2.5 sm:px-4 py-1.5 sm:py-2 text-[9px] min-[360px]:text-[10px] sm:text-[10px] font-black uppercase tracking-wider min-[360px]:tracking-widest rounded-full transition-all duration-300 whitespace-nowrap",
                            isCurrent ? "text-zinc-900 dark:text-white" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
                          )}
                        >
@@ -391,59 +397,11 @@ export default function App() {
                    })}
                  </nav>
 
-                 <div className="flex items-center gap-3">
-                   {/* Language Switcher */}
+                 {/* Desktop Options Widget Row */}
+                 <div className="hidden md:flex items-center gap-3">
                    <LanguageSwitcher onSimulateOffline={setIsOffline} />
-
-                   {/* Mobile Menu Button */}
-                   <button 
-                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                     className="md:hidden p-2 bg-white/5 hover:bg-white/10 text-white rounded-full transition-colors relative z-50"
-                     aria-label="Toggle Menu"
-                   >
-                     {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-                   </button>
                  </div>
               </div>
-
-              {/* Mobile Menu Dropdown Panel */}
-              <AnimatePresence>
-                {isMobileMenuOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="md:hidden w-full bg-black/95 border border-white/10 rounded-3xl p-6 mb-8 flex flex-col gap-4 z-40 relative shadow-2xl backdrop-blur-xl"
-                  >
-                    {[
-                      { name: t("nav.inicio"), path: "/" },
-                      { name: t("nav.projetos"), path: "/projects" },
-                      { name: t("nav.sobre"), path: "/about" },
-                      { name: t("nav.experiencia"), path: "/experience" },
-                      { name: t("nav.contato"), path: "/contact" }
-                    ].map((item, idx) => {
-                      const isCurrent = location.pathname === item.path;
-                      return (
-                        <Link 
-                          key={idx} 
-                          to={item.path} 
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className={cn(
-                            "flex items-center justify-between p-4 rounded-2xl transition-all font-black text-xs uppercase tracking-widest",
-                            isCurrent 
-                              ? "bg-primary/10 border border-primary/20 text-white" 
-                              : "bg-white/[0.01] border border-transparent text-zinc-400 hover:text-white"
-                          )}
-                        >
-                          <span>{item.name}</span>
-                          <span className={cn("text-xs", isCurrent ? "text-primary" : "text-zinc-600")}>// 0{idx + 1}</span>
-                        </Link>
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
 
             <Routes location={location} key={location.pathname}>

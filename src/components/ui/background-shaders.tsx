@@ -13,25 +13,21 @@ export default function BackgroundShaders({ isMobile }: { isMobile?: boolean }) 
 
   return (
     <div className="fixed inset-0 z-[-1] pointer-events-none bg-white dark:bg-black transition-colors duration-500">
-      {!isMobile ? (
-        <Warp
-          style={{ width: "100%", height: "100%" }}
-          proportion={0.45}
-          softness={0.9}
-          distortion={0.3}
-          swirl={0.8}
-          swirlIterations={8}
-          shape="checks"
-          shapeScale={0.08}
-          scale={1}
-          rotation={0}
-          speed={0.15}
-          colors={colors}
-          className="size-full opacity-65 dark:opacity-60 transition-all duration-500"
-        />
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-background" />
-      )}
+      <Warp
+        style={{ width: "100%", height: "100%" }}
+        proportion={isMobile ? 0.35 : 0.45}
+        softness={0.9}
+        distortion={0.3}
+        swirl={isMobile ? 0.6 : 0.8}
+        swirlIterations={isMobile ? 4 : 8}
+        shape="checks"
+        shapeScale={isMobile ? 0.05 : 0.08}
+        scale={1}
+        rotation={0}
+        speed={0.15}
+        colors={colors}
+        className="size-full opacity-65 dark:opacity-60 transition-all duration-500"
+      />
     </div>
   )
 }
