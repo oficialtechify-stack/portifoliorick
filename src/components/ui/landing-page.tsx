@@ -234,28 +234,28 @@ export function ScrollGlobe({ sections, globeConfig = defaultGlobeConfig, classN
                     className="border border-[#ff2800]/20 bg-[#050202]"
                   />
                 </div>
-                <div className="mt-5 text-white/50 text-xs sm:text-sm md:text-base font-black tracking-[0.3em] uppercase select-none">
+                <div className="mt-5 text-zinc-500 dark:text-white/50 text-xs sm:text-sm md:text-base font-black tracking-[0.3em] uppercase select-none">
                   {section.subtitle}
                 </div>
               </div>
             ) : (
               <h1 className={cn(
-                "font-bold mb-6 sm:mb-8 leading-[1.1] tracking-tight text-white",
+                "font-bold mb-6 sm:mb-8 leading-[1.1] tracking-tight text-zinc-900 dark:text-white transition-colors",
                 index === 0 
                   ? "text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl" 
                   : "text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl"
               )}>
                 {section.subtitle ? (
                   <div className="space-y-1 sm:space-y-2">
-                    <div className="bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent italic font-black uppercase text-[1.2em] tracking-tighter">
+                    <div className="bg-gradient-to-r from-zinc-900 to-zinc-750 dark:from-white dark:to-white/90 bg-clip-text text-transparent italic font-black uppercase text-[1.2em] tracking-tighter transition-all">
                       {section.title}
                     </div>
-                    <div className="text-white/40 text-[0.4em] sm:text-[0.45em] font-medium tracking-[0.2em] uppercase">
+                    <div className="text-zinc-500 dark:text-white/40 text-[0.4em] sm:text-[0.45em] font-medium tracking-[0.2em] uppercase transition-colors">
                       {section.subtitle}
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent uppercase italic font-black tracking-tighter">
+                  <div className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-700 dark:from-white dark:via-white dark:to-white/90 bg-clip-text text-transparent uppercase italic font-black tracking-tighter transition-all">
                     {section.title}
                   </div>
                 )}
@@ -263,10 +263,10 @@ export function ScrollGlobe({ sections, globeConfig = defaultGlobeConfig, classN
             )}
             
             <div className={cn(
-              "text-zinc-100 leading-relaxed mb-8 sm:mb-10 text-lg sm:text-xl lg:text-2xl font-medium",
+              "text-zinc-700 dark:text-zinc-200 leading-relaxed mb-8 sm:mb-10 text-lg sm:text-xl lg:text-2xl font-medium transition-colors",
               section.align === 'center' ? "max-w-full mx-auto text-center" : "max-w-full"
             )}>
-              <p className="mb-3 sm:mb-4 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">{section.description}</p>
+              <p className="mb-3 sm:mb-4">{section.description}</p>
             </div>
 
             {/* Enhanced Features - Responsive grid */}
@@ -276,7 +276,7 @@ export function ScrollGlobe({ sections, globeConfig = defaultGlobeConfig, classN
                   <div 
                     key={feature.title}
                     className={cn(
-                      "group p-4 sm:p-5 lg:p-6 rounded-lg sm:rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5",
+                      "group p-4 sm:p-5 lg:p-6 rounded-lg sm:rounded-xl border border-black/5 dark:border-white/10 bg-white dark:bg-white/5 backdrop-blur-sm hover:bg-zinc-50 dark:hover:bg-white/10 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 shadow-sm dark:shadow-none",
                       "hover:border-primary/20 hover:-translate-y-1"
                     )}
                     style={{ animationDelay: `${featureIndex * 0.1}s` }}
@@ -284,8 +284,8 @@ export function ScrollGlobe({ sections, globeConfig = defaultGlobeConfig, classN
                     <div className="flex items-start gap-3 sm:gap-4">
                       <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-primary/60 mt-1.5 sm:mt-2 group-hover:bg-primary transition-colors flex-shrink-0" />
                       <div className="flex-1 space-y-1.5 sm:space-y-2 min-w-0">
-                        <h3 className="font-bold text-white text-base sm:text-lg uppercase italic tracking-tight">{feature.title}</h3>
-                        <p className="text-zinc-400 leading-relaxed text-sm sm:text-base font-medium">{feature.description}</p>
+                        <h3 className="font-bold text-zinc-900 dark:text-white text-base sm:text-lg uppercase italic tracking-tight transition-colors">{feature.title}</h3>
+                        <p className="text-zinc-650 dark:text-zinc-400 leading-relaxed text-sm sm:text-base font-medium transition-colors">{feature.description}</p>
                       </div>
                     </div>
                   </div>
@@ -310,7 +310,7 @@ export function ScrollGlobe({ sections, globeConfig = defaultGlobeConfig, classN
                       "hover:shadow-[0_0_30px_rgba(255,76,43,0.4)] focus:outline-none focus:ring-2 focus:ring-primary/20 w-full sm:w-auto uppercase tracking-wider",
                       action.variant === 'primary' 
                         ? "bg-[#ff4c2b] text-black shadow-xl" 
-                        : "border-2 border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-primary/30 text-white"
+                        : "border-2 border-black/15 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-sm hover:bg-zinc-100 dark:hover:bg-white/10 hover:border-primary/30 text-zinc-900 dark:text-white transition-all duration-300"
                     )}
                     style={{ animationDelay: `${actionIndex * 0.1 + 0.2}s` }}
                   >

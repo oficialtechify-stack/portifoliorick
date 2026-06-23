@@ -48,15 +48,15 @@ export default function ExperiencePage() {
     <div className="w-full max-w-4xl mx-auto px-6 py-20 flex flex-col gap-12">
       {/* Title */}
       <div className="flex flex-col md:flex-row items-center justify-between px-2 gap-4">
-        <h3 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-center md:text-left">
+        <h3 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-center md:text-left text-zinc-900 dark:text-white transition-colors">
           {t("nav.experiencia")}
         </h3>
-        <div className="hidden md:block h-[1px] flex-1 bg-white/5 mx-8" />
+        <div className="hidden md:block h-[1px] flex-1 bg-black/10 dark:bg-white/5 mx-8 transition-colors" />
         <Briefcase className="text-primary animate-pulse w-8 h-8" />
       </div>
 
       {/* Interactive Timeline Layout */}
-      <div className="relative border-l border-white/5 pl-6 ml-4 md:ml-6 mt-10 space-y-12">
+      <div className="relative border-l border-black/10 dark:border-white/5 pl-6 ml-4 md:ml-6 mt-10 space-y-12 transition-colors">
         {TIMELINE.map((item, index) => (
           <motion.div
             key={index}
@@ -67,7 +67,7 @@ export default function ExperiencePage() {
             className="relative group text-left"
           >
             {/* Pulsing indicator node */}
-            <div className="absolute -left-[31px] md:-left-[33px] top-1.5 w-4 h-4 rounded-full bg-black border border-primary flex items-center justify-center transition-transform group-hover:scale-125 duration-300">
+            <div className="absolute -left-[31px] md:-left-[33px] top-1.5 w-4 h-4 rounded-full bg-background border border-primary flex items-center justify-center transition-transform group-hover:scale-125 duration-300">
               <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             </div>
 
@@ -81,10 +81,10 @@ export default function ExperiencePage() {
             </div>
 
             {/* Glass Card content */}
-            <div className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-primary/20 transition-all duration-500">
+            <div className="p-8 rounded-[2rem] bg-white dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-primary/20 transition-all duration-500 shadow-sm dark:shadow-none">
               <div className="flex flex-col md:flex-row justify-between md:items-center gap-2 mb-4">
                 <div>
-                  <h4 className="text-xl font-black italic uppercase tracking-tighter text-white group-hover:text-primary transition-colors">
+                  <h4 className="text-xl font-black italic uppercase tracking-tighter text-zinc-900 dark:text-white group-hover:text-primary transition-colors">
                     {item.role}
                   </h4>
                   <p className="text-zinc-500 text-xs uppercase tracking-widest font-bold mt-1">
@@ -93,7 +93,7 @@ export default function ExperiencePage() {
                 </div>
               </div>
 
-              <p className="text-sm font-medium text-zinc-300 leading-relaxed mb-6">
+              <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed mb-6 transition-colors">
                 {item.desc}
               </p>
 
@@ -102,7 +102,7 @@ export default function ExperiencePage() {
                 {item.points.map((pt, pIdx) => (
                   <div key={pIdx} className="flex gap-2.5 items-start">
                     <ChevronRight size={14} className="text-primary mt-1 shrink-0 animate-pulse" />
-                    <span className="text-xs text-zinc-400 font-medium leading-relaxed">{pt}</span>
+                    <span className="text-xs text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed transition-colors">{pt}</span>
                   </div>
                 ))}
               </div>

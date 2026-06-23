@@ -113,7 +113,7 @@ export default function BlurTextAnimation({
                 key={index}
                 className={`inline-block transition-all ${
                   isAnimating ? 'opacity-100' : 'opacity-0'
-                } ${isHighlighted ? 'text-white font-black italic shadow-primary/30 text-shadow-sm' : ''}`}
+                } ${isHighlighted ? 'text-primary font-black italic shadow-primary/30 text-shadow-sm' : ''}`}
                 style={{
                   transitionDuration: `${word.duration}s`,
                   transitionDelay: `${word.delay}s`,
@@ -130,9 +130,9 @@ export default function BlurTextAnimation({
                   backfaceVisibility: 'hidden',
                   textShadow: isAnimating 
                     ? isHighlighted 
-                      ? '0 0 15px rgba(255,76,43,0.3), 0 2px 8px rgba(255,255,255,0.2)'
-                      : '0 2px 8px rgba(255,255,255,0.1)' 
-                    : '0 0 40px rgba(255,255,255,0.4)'
+                      ? '0 0 15px rgba(255,76,43,0.3)'
+                      : undefined 
+                    : undefined
                 }}
               >
                 {word.text}

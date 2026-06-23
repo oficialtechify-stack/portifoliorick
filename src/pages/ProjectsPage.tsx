@@ -66,8 +66,8 @@ export default function ProjectsPage() {
         </Link>
 
         <div className="flex flex-col md:flex-row items-center justify-between mb-12 px-2 gap-4">
-            <h3 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-center md:text-left">{t("projects.title")}</h3>
-            <div className="hidden md:block h-[1px] flex-1 bg-white/5 mx-8" />
+            <h3 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-center md:text-left text-zinc-900 dark:text-white transition-colors">{t("projects.title")}</h3>
+            <div className="hidden md:block h-[1px] flex-1 bg-black/10 dark:bg-white/5 mx-8 transition-colors" />
             <ChevronRight className="text-primary animate-pulse" />
         </div>
 
@@ -77,17 +77,17 @@ export default function ProjectsPage() {
                 key={idx} 
                 contactHref={project.link} 
                 type={idx % 2 === 0 ? 'waves' : 'crosses'}
-                color={idx === 0 ? 'bg-primary' : 'bg-white/[0.03]'}
+                color={idx === 0 ? 'bg-primary text-black' : 'bg-white dark:bg-white/[0.03] text-zinc-900 dark:text-white border border-black/5 dark:border-white/5 shadow-sm'}
                 image={project.image}
                 className="max-w-none hover:scale-[1.02] transition-transform duration-500"
               >
-                 <CardHeading className={idx === 0 ? 'text-black' : 'text-white'}>
+                 <CardHeading className={idx === 0 ? 'text-black' : 'text-zinc-900 dark:text-white transition-colors'}>
                    {project.title}
                  </CardHeading>
                  <CardPrice className={idx === 0 ? 'text-black/60' : 'text-primary'}>
                    {project.stack}
                  </CardPrice>
-                 <CardParagraph className={idx === 0 ? 'text-black/80' : 'text-zinc-200 font-medium'}>
+                 <CardParagraph className={idx === 0 ? 'text-black/80' : 'text-zinc-650 dark:text-zinc-200 font-medium transition-colors'}>
                    {project.desc}
                  </CardParagraph>
               </PricingWrapper>

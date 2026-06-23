@@ -52,20 +52,24 @@ export const ShaderButton = React.forwardRef<HTMLButtonElement, ShaderButtonProp
 
         {/* Shader Background */}
         <div className={cn("absolute inset-0 z-0 opacity-80 group-hover:opacity-100 transition-opacity", shaderClassName)}>
-          <Warp
-            style={{ width: "100%", height: "100%" }}
-            proportion={0.5}
-            softness={0.7}
-            distortion={0.3}
-            swirl={1.2}
-            swirlIterations={10}
-            shape="checks"
-            shapeScale={0.08}
-            scale={1.5}
-            rotation={0}
-            speed={isHovered ? 2.5 : (lightMode ? 0.3 : 1.2)}
-            colors={["#FF0000", "#CC0000", "#FF4444", "#000000"]}
-          />
+          {!lightMode ? (
+            <Warp
+              style={{ width: "100%", height: "100%" }}
+              proportion={0.5}
+              softness={0.7}
+              distortion={0.3}
+              swirl={1.2}
+              swirlIterations={10}
+              shape="checks"
+              shapeScale={0.08}
+              scale={1.5}
+              rotation={0}
+              speed={isHovered ? 2.5 : 1.2}
+              colors={["#FF0000", "#CC0000", "#FF4444", "#000000"]}
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-r from-[#FF1A00] via-[#CC0000] to-[#FF4444]" />
+          )}
         </div>
 
         {/* Content */}

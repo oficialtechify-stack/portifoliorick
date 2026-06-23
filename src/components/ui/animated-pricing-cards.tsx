@@ -56,7 +56,7 @@ export const PricingWrapper: React.FC<{
 }> = ({ children, contactHref, className, type = 'waves', color = 'bg-primary', image }) => (
   <article
     className={cn(
-      'min-h-[450px] h-full max-w-sm w-full relative overflow-hidden rounded-[2.5rem] text-white p-6 group transition-all duration-500 border border-white/5 hover:border-white/10',
+      'min-h-[450px] h-full max-w-sm w-full relative overflow-hidden rounded-[2.5rem] p-6 group transition-all duration-500',
       color,
       className
     )}
@@ -64,7 +64,7 @@ export const PricingWrapper: React.FC<{
     <div className="relative z-10 h-full flex flex-col justify-between">
       <div className="space-y-6">
         {image && (
-          <div className="relative w-full aspect-[16/10] overflow-hidden rounded-2xl mb-4 border border-white/10">
+          <div className="relative w-full aspect-[16/10] overflow-hidden rounded-2xl mb-4 border border-black/5 dark:border-white/10">
             <img 
               src={image} 
               alt="Project preview" 
