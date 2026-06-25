@@ -104,16 +104,21 @@ export function ThemeSwitcher({
         }
 
         ::view-transition-new(root) {
-          -webkit-mask: url('${maskGifUrl}') center / 0 no-repeat;
-          mask: url('${maskGifUrl}') center / 0 no-repeat;
-          animation: scale ${duration};
-          animation-fill-mode: both;
+          -webkit-mask-image: url('${maskGifUrl}');
+          -webkit-mask-position: center;
+          -webkit-mask-repeat: no-repeat;
+          -webkit-mask-size: 0vmax;
+          mask-image: url('${maskGifUrl}');
+          mask-position: center;
+          mask-repeat: no-repeat;
+          mask-size: 0vmax;
+          animation: scale ${duration} ease-in-out both;
         }
 
-        ::view-transition-old(root),
-        .dark::view-transition-old(root) {
-          animation: scale ${duration};
-          animation-fill-mode: both;
+        ::view-transition-old(root) {
+          animation: none;
+          mix-blend-mode: normal;
+          opacity: 1;
         }
 
         ::view-transition-old(root),
@@ -123,20 +128,20 @@ export function ThemeSwitcher({
 
         @keyframes scale {
           0% {
-            -webkit-mask-size: 0;
-            mask-size: 0;
+            -webkit-mask-size: 0vmax;
+            mask-size: 0vmax;
           }
           10% {
-            -webkit-mask-size: 50vmax;
-            mask-size: 50vmax;
+            -webkit-mask-size: 80vmax;
+            mask-size: 80vmax;
           }
           90% {
-            -webkit-mask-size: 50vmax;
-            mask-size: 50vmax;
+            -webkit-mask-size: 80vmax;
+            mask-size: 80vmax;
           }
           100% {
-            -webkit-mask-size: 2000vmax;
-            mask-size: 2000vmax;
+            -webkit-mask-size: 2200vmax;
+            mask-size: 2200vmax;
           }
         }
 
