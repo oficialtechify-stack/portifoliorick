@@ -52,6 +52,7 @@ import { AreaChart, Area, Grid, XAxis, YAxis, ChartTooltip } from "./components/
 import { OfflinePage } from "./components/ui/offline-page";
 import { ParallaxHero } from "./components/ui/wilderness";
 import { ThemeSwitcher } from "./components/ui/theme-switcher";
+import { HighTechPreloader } from "./components/ui/high-tech-preloader";
 
 import { Routes, Route, useLocation, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
@@ -230,6 +231,7 @@ export default function App() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const [hasEntered, setHasEntered] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const musicPlayerRef = useRef<MusicPlayerHandle>(null);
   const [isDeveloping, setIsDeveloping] = useState(false);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
@@ -314,6 +316,16 @@ export default function App() {
             className="fixed inset-0 z-[5000]"
           >
             <OfflinePage />
+          </motion.div>
+        ) : isLoading ? (
+          <motion.div
+            key="loading-screen"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 z-[500]"
+          >
+            <HighTechPreloader onComplete={() => setIsLoading(false)} />
           </motion.div>
         ) : !hasEntered ? (
           <motion.div 

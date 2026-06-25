@@ -6,7 +6,7 @@ import { gsap } from "gsap"
 import { X, Code2, Figma, Smartphone, Globe, Rocket, Cpu, Palette, Monitor } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
 import { Button } from "@/components/ui/button"
-import { BallpitBackground } from "./interactive-hero-backgrounds"
+import { HighTechOrbitBackground } from "./high-tech-orbit-background"
 
 interface NavLinkProps {
   children: React.ReactNode
@@ -74,7 +74,7 @@ export default function WebGLHero({ onEnter }: { onEnter: () => void }) {
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
-      <BallpitBackground />
+      <HighTechOrbitBackground />
 
       <div className="relative z-10 h-full flex flex-col justify-end p-12 md:p-24">
         <div className="flex flex-col">

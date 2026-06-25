@@ -51,7 +51,7 @@ interface ThemeSwitcherProps {
 
 export function ThemeSwitcher({
   maskGifUrl = "https://media.tenor.com/cyORI7kwShQAAAAi/shigure-ui-dance.gif",
-  duration = "1.5s",
+  duration = "2.8s",
 }: ThemeSwitcherProps) {
   const { theme, toggleTheme } = useThemeSystem();
   const [isOpen, setIsOpen] = React.useState(false);
