@@ -140,28 +140,7 @@ export function ThemeSwitcher({
           }
         }
 
-        /* Fluid GPU-accelerated overrides on screens smaller than 768px (Mobile) */
-        @media (max-width: 768px) {
-          ::view-transition-new(root) {
-            -webkit-mask: none !important;
-            mask: none !important;
-            animation: view-fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-          }
-          ::view-transition-old(root) {
-            -webkit-mask: none !important;
-            mask: none !important;
-            animation: view-fade-out 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-          }
-        }
-
-        @keyframes view-fade-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes view-fade-out {
-          from { opacity: 1; }
-          to { opacity: 0; }
-        }
+        /* View Transition effects are enabled across all screen sizes */
       `}</style>
 
       {/* Button Switcher Trigger */}

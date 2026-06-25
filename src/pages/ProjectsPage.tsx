@@ -15,39 +15,11 @@ const PROJECTS = [
     image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=2070&auto=format&fit=crop"
   },
   {
-    title: "Neon Tic-Tac-Toe Diamond",
-    desc: "Jogo da velha com tema neon desenvolvido para diversão e passatempo. Interface luminosa e visual elegante.",
-    stack: "HTML + CSS + JS",
-    link: "https://neon-tic-tac-teo.netlify.app/",
-    image: "https://images.unsplash.com/photo-1611195974226-a6a9be9dd763?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
-    title: "Techify Max",
-    desc: "Sistema avançado de automação e escala digital de alto padrão.",
-    stack: "React + GSAP",
-    link: "https://splendid-unicorn-68fd5c.netlify.app",
-    image: "https://images.unsplash.com/photo-1551288049-bbdac8a28a1e?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
     title: "Techify Office",
     desc: "Plataforma de gestão e inteligência corporativa da Techify.",
     stack: "Next.js + Tailwind",
     link: "https://techify-office.vercel.app",
     image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
-    title: "Quantum Flow",
-    desc: "Engine de animação 3D para interfaces de alto desempenho.",
-    stack: "Three.js + Shaders",
-    link: "#",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
-    title: "Elite Commerce",
-    desc: "E-commerce headless com foco em performance extrema.",
-    stack: "SolidJS + Node",
-    link: "#",
-    image: "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=2070&auto=format&fit=crop"
   }
 ];
 

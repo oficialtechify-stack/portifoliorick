@@ -116,10 +116,6 @@ export default function HomePage({ isMobile }: { isMobile: boolean }) {
             <ParticleText 
               text="RICKZINXX"
               fontFamily="Inter, Montserrat, sans-serif"
-              particleSize={0.06}
-              animationSpeed={1.8}
-              mouseForce={180}
-              interactionMode="repel"
             />
           </div>
 
