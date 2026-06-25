@@ -64,7 +64,7 @@ export default function ContactPage() {
             <h4 className="text-xl font-black italic uppercase tracking-tighter text-zinc-900 dark:text-white mb-3 transition-colors">
               Vamos conversar?
             </h4>
-            <p className="text-sm font-medium text-zinc-650 dark:text-zinc-400 leading-relaxed max-w-md transition-colors">
+            <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-md transition-colors">
               Estou disponível para novas oportunidades de mercado, projetos freelancers focados em performance, consultorias de design UI ou parcerias inovadoras de desenvolvimento frontend.
             </p>
           </div>

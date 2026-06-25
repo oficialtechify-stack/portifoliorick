@@ -285,7 +285,7 @@ export function ScrollGlobe({ sections, globeConfig = defaultGlobeConfig, classN
                       <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-primary/60 mt-1.5 sm:mt-2 group-hover:bg-primary transition-colors flex-shrink-0" />
                       <div className="flex-1 space-y-1.5 sm:space-y-2 min-w-0">
                         <h3 className="font-bold text-zinc-900 dark:text-white text-base sm:text-lg uppercase italic tracking-tight transition-colors">{feature.title}</h3>
-                        <p className="text-zinc-650 dark:text-zinc-400 leading-relaxed text-sm sm:text-base font-medium transition-colors">{feature.description}</p>
+                        <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm sm:text-base font-medium transition-colors">{feature.description}</p>
                       </div>
                     </div>
                   </div>

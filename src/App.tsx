@@ -193,7 +193,7 @@ const LanguageSwitcher = ({ onSimulateOffline }: { onSimulateOffline: (val: bool
       <ThemeSwitcher />
       <DropdownMenu>
       <DropdownMenuTrigger className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "rounded-full hover:bg-black/5 dark:hover:bg-white/5 flex items-center gap-2 group px-4")}>
-        <Languages className="w-4 h-4 text-zinc-550 dark:text-white/50 group-hover:text-primary transition-colors" />
+        <Languages className="w-4 h-4 text-zinc-500 dark:text-white/50 group-hover:text-primary transition-colors" />
         <span className="text-[10px] font-black uppercase tracking-widest text-zinc-700 dark:text-white/70 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">
           {i18n.language.split('-')[0]}
         </span>
@@ -227,7 +227,7 @@ const LanguageSwitcher = ({ onSimulateOffline }: { onSimulateOffline: (val: bool
 
 // Main Application Component
 export default function App() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const location = useLocation();
   const [hasEntered, setHasEntered] = useState(false);
   const musicPlayerRef = useRef<MusicPlayerHandle>(null);
@@ -366,13 +366,14 @@ export default function App() {
                  </div>
 
                  {/* Shared Menu Pill (Always visible!) */}
-                 <nav className="flex items-center justify-center self-center gap-1 bg-black/[0.04] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 py-1 px-1 sm:py-1.5 sm:px-2 rounded-full backdrop-blur-md relative max-w-full overflow-x-auto no-scrollbar">
+                 <nav className="flex items-center justify-center self-center gap-0.5 min-[340px]:gap-1 bg-black/[0.04] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 py-1 px-1 sm:py-1.5 sm:px-2 rounded-full backdrop-blur-md relative max-w-full overflow-hidden">
                    {[
-                     { name: t("nav.inicio"), path: "/" },
-                     { name: t("nav.projetos"), path: "/projects" },
-                     { name: t("nav.sobre"), path: "/about" },
-                     { name: t("nav.experiencia"), path: "/experience" },
-                     { name: t("nav.contato"), path: "/contact" }
+                     { name: t("nav.inicio"), shortName: i18n.language.startsWith('pt') ? "Início" : "Home", path: "/" },
+                     { name: t("nav.projetos"), shortName: i18n.language.startsWith('pt') ? "Projetos" : "Projects", path: "/projects" },
+                     
+                     { name: t("nav.sobre"), shortName: i18n.language.startsWith('pt') ? "Sobre" : "About", path: "/about" },
+                     { name: t("nav.experiencia"), shortName: "XP", path: "/experience" },
+                     { name: t("nav.contato"), shortName: i18n.language.startsWith('pt') ? "Contato" : "Contact", path: "/contact" }
                    ].map((item, idx) => {
                      const isCurrent = location.pathname === item.path;
                      return (
@@ -380,11 +381,11 @@ export default function App() {
                          key={idx} 
                          to={item.path} 
                          className={cn(
-                           "relative px-2.5 sm:px-4 py-1.5 sm:py-2 text-[9px] min-[360px]:text-[10px] sm:text-[10px] font-black uppercase tracking-wider min-[360px]:tracking-widest rounded-full transition-all duration-300 whitespace-nowrap",
+                           "relative px-1.5 min-[340px]:px-2.5 sm:px-4 py-1.5 sm:py-2 text-[8px] min-[340px]:text-[10px] sm:text-[10px] font-black uppercase tracking-tight min-[340px]:tracking-wider sm:tracking-widest rounded-full transition-all duration-300 whitespace-nowrap",
                            isCurrent ? "text-zinc-900 dark:text-white" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
                          )}
                        >
-                         {item.name}
+                         <span className="md:inline hidden">{item.name}</span><span className="md:hidden inline">{item.shortName}</span>
                          {isCurrent && (
                            <motion.div 
                              layoutId="activeNavTabIndicator"
@@ -407,6 +408,7 @@ export default function App() {
             <Routes location={location} key={location.pathname}>
                <Route path="/" element={<HomePage isMobile={isMobile} />} />
                <Route path="/projects" element={<ProjectsPage />} />
+               <Route path="/dashboard" element={<DashboardPage />} />
 
                <Route path="/about" element={<AboutPage />} />
                <Route path="/experience" element={<ExperiencePage />} />

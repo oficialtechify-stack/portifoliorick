@@ -87,7 +87,7 @@ export default function ProjectsPage() {
                  <CardPrice className={idx === 0 ? 'text-black/60' : 'text-primary'}>
                    {project.stack}
                  </CardPrice>
-                 <CardParagraph className={idx === 0 ? 'text-black/80' : 'text-zinc-650 dark:text-zinc-200 font-medium transition-colors'}>
+                 <CardParagraph className={idx === 0 ? 'text-black/80' : 'text-zinc-600 dark:text-zinc-200 font-medium transition-colors'}>
                    {project.desc}
                  </CardParagraph>
               </PricingWrapper>
