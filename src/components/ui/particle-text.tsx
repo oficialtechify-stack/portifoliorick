@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useThemeSystem } from "./theme-switcher";
 
@@ -16,32 +16,33 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useThemeSystem();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     let w = 0;
     let h = 0;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
+    // Settings will be dynamically updated based on width
     const settings = {
       cellSize: 3,
-      releaseTestsPerFrame: 1800,
+      releaseTestsPerFrame: 1500,
       releaseChance: 0.025,
-      gravity: 850,
+      gravity: 800,
       airDrag: 0.992,
-      settleStepsPerFrame: 5,
-      pileHoldSeconds: 0.6,
-      hiddenFadeInSeconds: 0.45,
-      reformDurationSeconds: 1.8,
-      reformStaggerSeconds: 0.5,
-      revealHoldSeconds: 3,
-      revealFadeSeconds: 0.6,
+      settleStepsPerFrame: 4,
+      pileHoldSeconds: 0.7,
+      hiddenFadeInSeconds: 0.4,
+      reformDurationSeconds: 1.6,
+      reformStaggerSeconds: 0.45,
+      revealHoldSeconds: 2.5,
+      revealFadeSeconds: 0.5,
     };
 
     let cols = 0;
@@ -135,8 +136,11 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
       maskCanvas.width = w;
       maskCanvas.height = h;
 
-      // Calculate perfect responsive font size
-      const fontSize = Math.min(w * 0.13, h * 0.42, 105);
+      const isMobile = w < 768;
+      // Calculate responsive font size to perfectly fit on screen
+      const fontSize = isMobile 
+        ? Math.min(w * 0.165, h * 0.45, 95) 
+        : Math.min(w * 0.14, h * 0.42, 105);
 
       maskCtx.clearRect(0, 0, w, h);
       maskCtx.fillStyle = "#fff";
@@ -144,8 +148,8 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
       maskCtx.textBaseline = "middle";
       maskCtx.font = `900 ${fontSize}px ${fontFamily}`;
 
-      // Place text higher up to allow plenty of room for sand to fall
-      maskCtx.fillText(text, w / 2, h * 0.42);
+      // Place text nicely centered vertically
+      maskCtx.fillText(text, w / 2, h * 0.4);
 
       const image = maskCtx.getImageData(0, 0, w, h).data;
 
@@ -154,17 +158,19 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
 
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
-          const x = Math.floor(col * settings.cellSize + settings.cellSize / 2);
-          const y = Math.floor(row * settings.cellSize + settings.cellSize / 2);
+          const x = Math.min(w - 1, Math.max(0, Math.floor(col * settings.cellSize + settings.cellSize / 2)));
+          const y = Math.min(h - 1, Math.max(0, Math.floor(row * settings.cellSize + settings.cellSize / 2)));
 
           const pixelIndex = (y * w + x) * 4;
           const alpha = image[pixelIndex + 3];
 
           if (alpha > 45) {
             const i = index(col, row);
-            fixedCodepen[i] = 1;
-            codepenCells.push(i);
-            looseCells.push(i);
+            if (i < fixedCodepen.length) {
+              fixedCodepen[i] = 1;
+              codepenCells.push(i);
+              looseCells.push(i);
+            }
           }
         }
       }
@@ -183,7 +189,9 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
       reforming = [];
 
       for (const cell of codepenCells) {
-        fixedCodepen[cell] = 1;
+        if (cell < fixedCodepen.length) {
+          fixedCodepen[cell] = 1;
+        }
       }
 
       hiddenAlpha = 0;
@@ -192,6 +200,8 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
     }
 
     function releaseOneGrain(cellIndex: number) {
+      if (cellIndex >= fixedCodepen.length) return;
+      
       const col = colFromIndex(cellIndex);
       const row = rowFromIndex(cellIndex);
 
@@ -221,7 +231,7 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
         const listIndex = randInt(0, looseCells.length - 1);
         const cellIndex = looseCells[listIndex];
 
-        if (fixedCodepen[cellIndex] === 0) {
+        if (cellIndex >= fixedCodepen.length || fixedCodepen[cellIndex] === 0) {
           looseCells.splice(listIndex, 1);
           continue;
         }
@@ -251,12 +261,16 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
     function pileSolid(col: number, row: number) {
       if (row >= rows) return true;
       if (col < 0 || col >= cols) return true;
-      return pile[index(col, row)] === 1;
+      const idx = index(col, row);
+      return idx >= pile.length || pile[idx] === 1;
     }
 
     function setPile(col: number, row: number) {
       if (!inBounds(col, row)) return;
-      pile[index(col, row)] = 1;
+      const idx = index(col, row);
+      if (idx < pile.length) {
+        pile[idx] = 1;
+      }
     }
 
     function settleFallingParticle(p: FallingParticle) {
@@ -311,7 +325,7 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
         p.x += p.vx * dt;
         p.y += p.vy * dt;
 
-        // Mouse interaction with falling particles
+        // Mouse/Touch interaction with falling particles
         if (mouse.active) {
           const dx = p.x - mouse.x;
           const dy = p.y - mouse.y;
@@ -362,12 +376,14 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
 
     function settlePileCell(col: number, row: number) {
       const current = index(col, row);
-
-      if (pile[current] !== 1) return;
+      if (current >= pile.length || pile[current] !== 1) return;
 
       if (!pileSolid(col, row + 1)) {
-        pile[index(col, row + 1)] = 1;
-        pile[current] = 0;
+        const target = index(col, row + 1);
+        if (target < pile.length) {
+          pile[target] = 1;
+          pile[current] = 0;
+        }
         return;
       }
 
@@ -375,26 +391,38 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
 
       if (preferLeft) {
         if (!pileSolid(col - 1, row + 1)) {
-          pile[index(col - 1, row + 1)] = 1;
-          pile[current] = 0;
+          const target = index(col - 1, row + 1);
+          if (target < pile.length) {
+            pile[target] = 1;
+            pile[current] = 0;
+          }
           return;
         }
 
         if (!pileSolid(col + 1, row + 1)) {
-          pile[index(col + 1, row + 1)] = 1;
-          pile[current] = 0;
+          const target = index(col + 1, row + 1);
+          if (target < pile.length) {
+            pile[target] = 1;
+            pile[current] = 0;
+          }
           return;
         }
       } else {
         if (!pileSolid(col + 1, row + 1)) {
-          pile[index(col + 1, row + 1)] = 1;
-          pile[current] = 0;
+          const target = index(col + 1, row + 1);
+          if (target < pile.length) {
+            pile[target] = 1;
+            pile[current] = 0;
+          }
           return;
         }
 
         if (!pileSolid(col - 1, row + 1)) {
-          pile[index(col - 1, row + 1)] = 1;
-          pile[current] = 0;
+          const target = index(col - 1, row + 1);
+          if (target < pile.length) {
+            pile[target] = 1;
+            pile[current] = 0;
+          }
           return;
         }
       }
@@ -405,7 +433,7 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
       for (let row = rows - 1; row >= 0; row--) {
         for (let col = 0; col < cols; col++) {
           const i = index(col, row);
-          if (pile[i] === 1) {
+          if (i < pile.length && pile[i] === 1) {
             cells.push(i);
           }
         }
@@ -486,7 +514,9 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
 
       if (allArrived) {
         for (const cell of codepenCells) {
-          fixedCodepen[cell] = 1;
+          if (cell < fixedCodepen.length) {
+            fixedCodepen[cell] = 1;
+          }
         }
         reforming = [];
         phase = "hiddenHold";
@@ -564,9 +594,10 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
 
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
-          if (fixedCodepen[index(col, row)] !== 1) continue;
-
-          ctx.fillRect(col * size, row * size, size, size);
+          const idx = index(col, row);
+          if (idx < fixedCodepen.length && fixedCodepen[idx] === 1) {
+            ctx.fillRect(col * size, row * size, size, size);
+          }
         }
       }
     }
@@ -586,9 +617,10 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
 
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
-          if (pile[index(col, row)] !== 1) continue;
-
-          ctx.fillRect(col * size, row * size, size, size);
+          const idx = index(col, row);
+          if (idx < pile.length && pile[idx] === 1) {
+            ctx.fillRect(col * size, row * size, size, size);
+          }
         }
       }
     }
@@ -603,6 +635,7 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
     }
 
     function draw() {
+      // Clear background to be fully transparent so it fits flawlessly in any theme
       ctx.clearRect(0, 0, w, h);
 
       drawHiddenText();
@@ -625,7 +658,7 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
         }
       }
 
-      // Splash effect / disturb pile when mouse is actively swiped through it
+      // Splash effect / disturb pile when mouse or finger swipe is active
       if (mouse.active) {
         const mouseCol = Math.floor(mouse.x / settings.cellSize);
         const mouseRow = Math.floor(mouse.y / settings.cellSize);
@@ -636,7 +669,7 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
             const r = mouseRow + rOffset;
             if (inBounds(c, r)) {
               const idx = index(c, r);
-              if (pile[idx] === 1 && Math.random() < 0.65) {
+              if (idx < pile.length && pile[idx] === 1 && Math.random() < 0.65) {
                 pile[idx] = 0;
                 falling.push({
                   x: c * settings.cellSize,
@@ -657,13 +690,16 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
       animFrameId = requestAnimationFrame(tick);
     }
 
-    function resize() {
-      const rect = containerRef.current?.getBoundingClientRect() || {
-        width: window.innerWidth,
-        height: 240,
-      };
-      w = rect.width || window.innerWidth;
-      h = rect.height || 240;
+    // Dynamic scale configuration & allocation of TypedArrays
+    function configureGrid(width: number, height: number) {
+      w = width;
+      h = height;
+
+      // Adjust density and steps for flawless performance on mobile devices
+      const isMobile = w < 768;
+      settings.cellSize = isMobile ? 4 : 3;
+      settings.releaseTestsPerFrame = isMobile ? 600 : 1500;
+      settings.settleStepsPerFrame = isMobile ? 2 : 4;
 
       canvas.width = w * dpr;
       canvas.height = h * dpr;
@@ -690,14 +726,24 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
       buildText();
     }
 
-    resize();
+    // High performance ResizeObserver to precisely adapt on any layout paint (especially on mobile)
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        // Safeguard to trigger only when fully laid out in viewport
+        if (width > 20 && height > 20) {
+          configureGrid(width, height);
+        }
+      }
+    });
+
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    } else {
+      configureGrid(window.innerWidth, 240);
+    }
+
     animFrameId = requestAnimationFrame(tick);
-
-    const handleResize = () => {
-      resize();
-    };
-
-    window.addEventListener("resize", handleResize);
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
@@ -721,14 +767,14 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
       }
     };
 
-    canvas.addEventListener("mousemove", handleMouseMove);
-    canvas.addEventListener("mouseleave", handleMouseLeave);
+    canvas.addEventListener("mousemove", handleMouseMove, { passive: true });
+    canvas.addEventListener("mouseleave", handleMouseLeave, { passive: true });
     canvas.addEventListener("touchmove", handleTouchMove, { passive: true });
-    canvas.addEventListener("touchend", handleMouseLeave);
+    canvas.addEventListener("touchend", handleMouseLeave, { passive: true });
 
     return () => {
       cancelAnimationFrame(animFrameId);
-      window.removeEventListener("resize", handleResize);
+      resizeObserver.disconnect();
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseleave", handleMouseLeave);
       canvas.removeEventListener("touchmove", handleTouchMove);
@@ -739,7 +785,7 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-[220px] md:h-[260px] overflow-hidden select-none cursor-pointer ${className}`}
+      className={`relative w-full h-[210px] md:h-[260px] overflow-hidden select-none cursor-pointer ${className}`}
     >
       <canvas ref={canvasRef} className="block w-full h-full" />
     </div>
